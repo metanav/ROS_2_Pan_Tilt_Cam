@@ -1,0 +1,15 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 50 # Hz
+    
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ptcam_robot_controller:
+      type: position_controllers/JointGroupPositionController
+
+ptcam_robot_controller:
+  ros__parameters:
+    joints:
+      - pan_joint
+      - tilt_joint

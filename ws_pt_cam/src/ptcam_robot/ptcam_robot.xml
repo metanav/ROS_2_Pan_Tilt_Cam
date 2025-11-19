@@ -1,0 +1,9 @@
+<library path="ptcam_robot">
+  <class name="ptcam_robot/PTCamSystemHardware"
+         type="ptcam_robot::PTCamSystemHardware"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      The ros2_control Pan and Tilt Camera Robot uses a system hardware interface-type. It uses position command and position state interface. 
+    </description>
+  </class>
+</library>

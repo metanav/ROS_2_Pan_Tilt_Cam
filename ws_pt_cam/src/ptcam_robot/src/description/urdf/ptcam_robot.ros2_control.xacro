@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <ros2_control name="ptcam_robot_ros2_control" type="system">
+    <hardware>
+      <!-- The type must match the plugin name defined in your C++ code -->
+      <plugin>ptcam_robot/PTCamSystemHardware</plugin>
+      
+      <!-- Hardware specific parameters for the entire chip -->
+      <param name="i2c_bus">/dev/i2c-1</param>
+      <param name="i2c_address">0x40</param>
+    </hardware>
+
+    <joint name="pan_joint">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <param name="channel">9</param> 
+      <param name="min_pulse_us">500.0</param>
+      <param name="max_pulse_us">2500.0</param>
+    </joint>
+
+    <joint name="tilt_joint">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <param name="channel">14</param> 
+      <param name="min_pulse_us">500.0</param>
+      <param name="max_pulse_us">2500.0</param>
+    </joint>
+
+  </ros2_control>
+
+</robot>

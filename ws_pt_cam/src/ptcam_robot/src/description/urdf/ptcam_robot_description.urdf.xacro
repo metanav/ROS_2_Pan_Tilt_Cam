@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<robot name="ptcam_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <material name="gray">
+    <color rgba="0.5 0.5 0.5 1.0"/>
+  </material>
+
+  <material name="gray_trans">
+    <color rgba="0.37 0.38 0.47 1.0"/>
+  </material>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://ptcam_robot/meshes/base.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <link name="pan_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://ptcam_robot/meshes/dss-p05_servo.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin xyz="-0.0377 -0.0101 -0.018" rpy="1.5708 0 1.5708"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <link name="tilt_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://ptcam_robot/meshes/dss-p05_servo.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin xyz="0.0175 0.023 0.0145" rpy="3.1416 1.5708 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <link name="u_bracket_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://ptcam_robot/meshes/u_bracket.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin xyz="0 0 0.030" rpy="-1.5708 0 1.5708"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <link name="multi_bracket_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://ptcam_robot/meshes/multi_bracket.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin xyz="-0.010 0.0255 -0.001" rpy="1.5708 0 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="pan_link"/>
+    <origin xyz="0.010 -0.012 0" rpy="0 0 0"/> 
+  </joint>
+
+  <joint name="pan_joint" type="revolute">
+    <parent link="pan_link"/>
+    <child link="multi_bracket_link"/>
+    <origin xyz="0.0 0.0 0.025" rpy="0 0 0"/> 
+    <axis xyz="0 0 1"/> 
+    <limit lower="0" upper="3.1416" effort="0.5" velocity="1.0"/> 
+    <dynamics damping="0.1" friction="0.1"/>
+  </joint> 
+
+  <joint name="multi_bracket_joint" type="fixed">
+    <parent link="multi_bracket_link"/>
+    <child link="tilt_link"/>
+    <origin xyz="0 0 0.010" rpy="0 0 0"/> 
+  </joint>
+
+  <joint name="tilt_joint" type="revolute">
+    <parent link="tilt_link"/>
+    <child link="u_bracket_link"/>
+    <origin xyz="-0.020 0.005 0.0045" rpy="0 1.5708 0"/> 
+    <axis xyz="0 -1 0"/> 
+    <limit lower="1.0472" upper="2.0944" effort="0.5" velocity="1.0"/>
+    <dynamics damping="0.1" friction="0.1"/>
+  </joint>
+
+  <link name="camera_link">
+    <visual>
+      <geometry>
+        <box size="0.060 0.025 0.020"/> 
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <link name="camera_lens_link">
+    <visual>
+      <geometry>
+         <cylinder length="0.020" radius="0.010"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="gray_trans"/>
+    </visual>
+  </link>
+
+  <joint name="camera_joint" type="fixed">
+    <parent link="u_bracket_link"/>
+    <child link="camera_link"/>
+    <origin xyz="0 0 0.0415" rpy="0 0 1.5708"/> 
+  </joint>
+
+  <joint name="camera_lens_joint" type="fixed">
+    <parent link="camera_link"/>
+    <child link="camera_lens_link"/>
+    <origin xyz="0.014 -0.010 0" rpy="0 1.5708 1.5708"/> 
+  </joint>
+
+</robot>
